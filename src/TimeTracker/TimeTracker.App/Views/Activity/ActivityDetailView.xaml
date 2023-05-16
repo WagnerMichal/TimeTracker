@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       Style="{StaticResource ContentPageStyle}"
+                       xmlns:views="using:TimeTracker.App.Views"
+                       xmlns:vm="clr-namespace:TimeTracker.App.ViewModels"
+                       x:DataType="vm:ActivityDetailViewModel"
+                       xmlns:controls="clr-namespace:Microsoft.Maui.Controls;assembly=Microsoft.Maui.Controls"
+                       xmlns:t="clr-namespace:TimeTracker.App.Resources.Texts"
+                       x:Class="TimeTracker.App.Views.Activity.ActivityDetailView"
+                       x:Name="ActivityDetailViewRoot">
+
+    <controls:ScrollView>
+        <StackLayout>
+            <VerticalStackLayout
+                MaximumWidthRequest="1200">
+
+                <Label
+                    Style="{StaticResource HeaderH1}"
+                    Text="{x:Static t:Activity.DetailActivity_Title}" />
+
+                <HorizontalStackLayout
+                    Margin="10"
+                    Spacing="20"
+                    VerticalOptions="Center">
+
+                    <Button
+                        Text="{x:Static t:Activity.DetailActivity_Delete}"
+                        Command="{Binding DeleteCommand}"
+                        Style="{StaticResource ErrorButton}"/>
+
+                </HorizontalStackLayout>
+
+                <Grid
+                    Margin="10"
+                    ColumnDefinitions="170, auto"
+                    RowDefinitions="auto, auto, auto, auto, auto, auto, auto"
+                    >
+
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        FontAttributes="Italic"
+                        Text="{x:Static t:Activity.DetailActivity_ProjectName}"/>
+
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Text="{Binding ProjectName}"/>
+
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        FontAttributes="Italic"
+                        Text="{x:Static t:Activity.DetailActivity_UserName}"/>
+
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Text="{Binding UserName}"/>
+
+                    <Label
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        FontAttributes="Italic"
+                        Text="{x:Static t:Activity.DetailActivity_Type}"/>
+
+                    <Label
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Text="{Binding Activity.Type, Converter={StaticResource ActivityTypeToStringConverter}}"/>
+
+                    <Label
+                        Grid.Row="3"
+                        Grid.Column="0"
+                        FontAttributes="Italic"
+                        Text="{x:Static t:Activity.DetailActivity_UserName}"/>
+
+                    <Label
+                        Grid.Row="3"
+                        Grid.Column="1"
+                        Text="{Binding Activity.Start}"/>
+
+                    <Label
+                        Grid.Row="4"
+                        Grid.Column="0"
+                        FontAttributes="Italic"
+                        Text="{x:Static t:Activity.DetailActivity_End}"/>
+
+                    <Label
+                        Grid.Row="4"
+                        Grid.Column="1"
+                        Text="{Binding Activity.End}"/>
+
+                    <Label
+                        Grid.Row="5"
+                        Grid.Column="0"
+                        FontAttributes="Italic"
+                        Text="{x:Static t:Activity.DetailActivity_Duration}"/>
+
+                    <Label
+                        Grid.Row="5"
+                        Grid.Column="1"
+                        Text="{Binding Activity.Duration}"/>
+                </Grid>
+
+            </VerticalStackLayout>
+        </StackLayout>
+    </controls:ScrollView>
+
+</views:ContentPageBase>

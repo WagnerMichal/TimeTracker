@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       Style="{StaticResource ContentPageStyle}"
+                       x:Class="TimeTracker.App.Views.Project.ProjectEditView"
+                       x:Name="ProjectEditViewRoot"
+                       x:DataType="vm:ProjectEditViewModel"
+                       xmlns:controls="clr-namespace:Microsoft.Maui.Controls;assembly=Microsoft.Maui.Controls"
+                       xmlns:views="using:TimeTracker.App.Views"
+                       xmlns:vm="clr-namespace:TimeTracker.App.ViewModels"
+                       xmlns:t="clr-namespace:TimeTracker.App.Resources.Texts">
+
+    <controls:ScrollView>
+        <StackLayout>
+            <VerticalStackLayout
+                MaximumWidthRequest="1200">
+        
+                <Label 
+                    Text="{x:Static t:Project.EditProject_Title}"
+                    Style="{StaticResource HeaderH1}"/>
+        
+                <Grid
+                    RowDefinitions="auto, auto"
+                    ColumnDefinitions="300, auto">
+
+                    <Label Grid.Column="0" Grid.Row="0" 
+                           Text="{x:Static t:Project.EditProject_Name}"/>
+                    <Entry Grid.Column="1" Grid.Row="0" 
+                           Text="{Binding Project.Name}"/>
+
+                    <Label Grid.Column="0" Grid.Row="1" 
+                           Text="{x:Static t:Project.EditProject_Description}"/>
+                    <Editor Grid.Column="1" Grid.Row="1" 
+                           Text="{Binding Project.Description}"/>
+            
+                </Grid>
+        
+                <Button 
+                    Text="{x:Static t:Project.EditProject_Save}"
+                    WidthRequest="200"
+                    Command="{Binding SaveCommand}"/>
+        
+            </VerticalStackLayout>
+        </StackLayout>
+    </controls:ScrollView>
+
+</views:ContentPageBase>

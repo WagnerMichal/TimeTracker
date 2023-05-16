@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       Style="{StaticResource ContentPageStyle}"
+                       xmlns:views="using:TimeTracker.App.Views"
+                       x:DataType="vm:UserDetailViewModel"
+                       xmlns:controls="clr-namespace:Microsoft.Maui.Controls;assembly=Microsoft.Maui.Controls"
+                       x:Class="TimeTracker.App.Views.User.UserDetailView"
+                       x:Name="UserDetailViewRoot"
+                       xmlns:vm="clr-namespace:TimeTracker.App.ViewModels" 
+                       xmlns:t="clr-namespace:TimeTracker.App.Resources.Texts"
+                       xmlns:m="clr-namespace:TimeTracker.BL.Models;assembly=TimeTracker.BL">
+
+    <controls:ScrollView>
+        <StackLayout>
+            <VerticalStackLayout
+                MaximumWidthRequest="1200">
+                <HorizontalStackLayout
+                    Spacing="10">
+                    <Image
+                        WidthRequest="64"
+                        HeightRequest="64"
+                        Source="{Binding User.Photo, TargetNullValue={AppThemeBinding Light='no_avatar_light.png', Dark='no_avatar_dark.png'}}">
+                    </Image>
+                    <Label
+                        Style="{StaticResource HeaderH1}">
+                        <Label.Text>
+                            <MultiBinding StringFormat="{}{0} {1}">
+                                <Binding Path="User.Name"/>
+                                <Binding Path="User.LastName"/>
+                            </MultiBinding>
+                        </Label.Text>
+                    </Label>
+                </HorizontalStackLayout>
+        
+                <HorizontalStackLayout
+                    Margin="10"
+                    Spacing="20"
+                    VerticalOptions="Center"
+                >
+                    <Button
+                        Text="{x:Static t:User.DetailUser_Edit}"
+                        Command="{Binding GoToEditCommand}"/>
+            
+                    <Button
+                        Text="{x:Static t:User.DetailUser_Delete}"
+                        Command="{Binding DeleteCommand}"
+                        Style="{StaticResource ErrorButton}"/>
+                    <Button 
+                        Text="{x:Static t:User.DetailUser_CreateActivity}"
+                        Command="{Binding GoToCreateTaskCommand}"
+                        Style="{StaticResource InfoButton}"/>
+            
+                </HorizontalStackLayout>
+
+                <Grid
+                    Margin="10"
+                    ColumnDefinitions="170, auto"
+                    RowDefinitions="auto, auto, auto">
+
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        FontAttributes="Italic"
+                        Text="{x:Static t:User.DetailUser_Email}"
+                    />
+
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Text="{Binding User.Email}"/>
+
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        FontAttributes="Italic"
+                        Text="{x:Static t:User.DetailUser_Activities}"/>
+
+                    <CollectionView 
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        ItemsSource="{Binding User.Activities}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="m:ActivityListModel">
+                                <HorizontalStackLayout
+                                    Spacing="10"
+                                    >
+                                    <Label Text="{Binding Type, Converter={StaticResource ActivityTypeToStringConverter}}"/>
+
+                                    <Label>
+                                        <Label.Text>
+                                            <MultiBinding StringFormat="{}{0} - {1} ({2})">
+                                                <Binding Path="Start"/>
+                                                <Binding Path="End"/>
+                                                <Binding Path="Duration"/>
+                                            </MultiBinding>
+                                        </Label.Text>
+                                    </Label>
+                                </HorizontalStackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                    <Label
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        FontAttributes="Italic"
+                        Text="{x:Static t:User.DetailUser_Projects}"/>
+
+                    <CollectionView 
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        ItemsSource="{Binding User.Projects}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="m:UserInProjectListModel">
+                                <Label 
+                                    Text="{Binding ProjectName}"
+                                />
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                </Grid>
+        
+            </VerticalStackLayout>
+        </StackLayout>
+    </controls:ScrollView>
+</views:ContentPageBase>

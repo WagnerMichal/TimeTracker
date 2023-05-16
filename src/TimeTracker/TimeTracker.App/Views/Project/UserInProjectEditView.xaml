@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       Style="{StaticResource ContentPageStyle}"
+                       x:Class="TimeTracker.App.Views.Project.UserInProjectEditView"
+                       x:Name="UserInProjectEditViewRoot"
+                       xmlns:behaviors="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+                       x:DataType="vm:UserInProjectEditViewModel"
+                       xmlns:views="using:TimeTracker.App.Views"
+                       xmlns:controls="clr-namespace:Microsoft.Maui.Controls;assembly=Microsoft.Maui.Controls"
+                       xmlns:t="clr-namespace:TimeTracker.App.Resources.Texts"
+                       xmlns:m="clr-namespace:TimeTracker.BL.Models;assembly=TimeTracker.BL"
+                       xmlns:vm="clr-namespace:TimeTracker.App.ViewModels">
+
+    <controls:ScrollView>
+        <StackLayout>
+            <VerticalStackLayout
+                MaximumWidthRequest="1200">
+        
+                <Label 
+                    Text="{x:Static t:Project.EditUserInProject_Title}"
+                    Style="{StaticResource HeaderH1}"/>
+
+                <Grid
+                    RowDefinitions="auto, auto"
+                    ColumnDefinitions="300, auto">
+
+                    <Label Grid.Column="0" Grid.Row="0" 
+                           Text="{x:Static t:Project.EditUserInProject_Users}"/>
+
+                    <Picker Grid.Row="0" Grid.Column="1"
+                            ItemsSource="{Binding Users}"
+                            ItemDisplayBinding="{Binding FullName}"
+                            SelectedItem="{Binding UserSelected}" />
+            
+                </Grid>
+        
+                <Button 
+                    Text="{x:Static t:Project.EditUserInProject_Save}"
+                    WidthRequest="200"
+                    Command="{Binding AddNewUserToProjectCommand}"/>
+        
+                <CollectionView
+                                ItemsSource="{Binding Project.Users}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="m:UserInProjectDetailModel">
+                            <Grid
+                                RowDefinitions="auto, auto"
+                                ColumnDefinitions="300, auto">
+                                <Label Grid.Column="0" VerticalOptions="Center">
+                                    <Label.Text>
+                                        <MultiBinding StringFormat="{}{0} {1}">
+                                            <Binding Path="UserName"/>
+                                            <Binding Path="UserLastName"/>
+                                        </MultiBinding>
+                                    </Label.Text>
+                                </Label>
+                                <Button Grid.Column="1"
+                                        HorizontalOptions="Start" VerticalOptions="Center"
+                                        Text="{x:Static t:Project.EditUserInProject_Remove}"
+                                        Command="{Binding Source={x:Reference UserInProjectEditViewRoot}, Path=BindingContext.RemoveUserCommand}"
+                                        CommandParameter="{Binding .}"
+                                        Style="{StaticResource ErrorButton}" />
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+            </VerticalStackLayout>
+        </StackLayout>
+    </controls:ScrollView>
+
+</views:ContentPageBase>

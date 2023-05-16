@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       Style="{StaticResource ContentPageStyle}"
+                       xmlns:views="using:TimeTracker.App.Views"
+                       x:Class="TimeTracker.App.Views.Activity.ActivityEditView"
+                       xmlns:controls="clr-namespace:Microsoft.Maui.Controls;assembly=Microsoft.Maui.Controls"
+                       x:Name="ActivityEditViewRoot"
+                       x:DataType="vm:ActivityEditViewModel"
+                       xmlns:vm="clr-namespace:TimeTracker.App.ViewModels"
+                       xmlns:t="clr-namespace:TimeTracker.App.Resources.Texts">
+
+    <controls:ScrollView>
+        <StackLayout>
+            <VerticalStackLayout
+                MaximumWidthRequest="1200">
+        
+                <Label 
+                    Text="{x:Static t:Activity.EditActivity_Title}"
+                    Style="{StaticResource HeaderH1}"/>
+        
+                <Grid
+                    RowDefinitions="auto, auto, auto, auto"
+                    ColumnDefinitions="300, auto">
+               
+                    <Label Grid.Column="0" Grid.Row="0" 
+                           Text="{x:Static t:Activity.EditActivity_Type}"/>
+                    <Picker Grid.Column="1" Grid.Row="0"
+                           ItemsSource="{Binding Types}"
+                           ItemDisplayBinding="{Binding ., Converter={StaticResource ActivityTypeToStringConverter}}"
+                           SelectedItem="{Binding Activity.Type}" />
+
+                    <Label Grid.Column="0" Grid.Row="1" 
+                           Text="{x:Static t:Activity.EditActivity_Start}"/>
+                    <HorizontalStackLayout Grid.Column="1" Grid.Row="1" >
+                           <DatePicker
+                                  Date="{Binding StartDate}"/>
+                           <TimePicker
+                                  Time="{Binding StartTime}"/>
+                    </HorizontalStackLayout>
+            
+                    <Label Grid.Column="0" Grid.Row="2" 
+                           Text="{x:Static t:Activity.EditActivity_End}"/>
+                       <HorizontalStackLayout Grid.Column="1" Grid.Row="2" >
+                              <DatePicker
+                                     Date="{Binding EndDate}"/>
+                              <TimePicker
+                                     Time="{Binding EndTime}"/>
+                       </HorizontalStackLayout>
+
+                    <Label Grid.Column="0" Grid.Row="3"
+                           Text="{x:Static t:Activity.EditActivity_Project}"/>
+                    <Picker Grid.Row="3" Grid.Column="2"
+                            ItemsSource="{Binding Projects}"
+                            ItemDisplayBinding="{Binding ProjectName}"
+                            SelectedItem="{Binding ProjectSelected}" />
+
+                </Grid>
+        
+                <Button 
+                    Text="{x:Static t:Activity.EditActivity_Save}"
+                    WidthRequest="200"
+                    Command="{Binding SaveCommand}"/>
+        
+            </VerticalStackLayout>
+        </StackLayout>
+    </controls:ScrollView>
+</views:ContentPageBase>

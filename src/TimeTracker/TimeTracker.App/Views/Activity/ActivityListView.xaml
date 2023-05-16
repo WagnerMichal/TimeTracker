@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       Style="{StaticResource ContentPageStyle}"
+                       xmlns:views="using:TimeTracker.App.Views"
+                       x:Class="TimeTracker.App.Views.Activity.ActivityListView"
+                       x:Name="ActivityListViewRoot"
+                       x:DataType="vm:ActivityListViewModel"
+                       xmlns:controls="clr-namespace:Microsoft.Maui.Controls;assembly=Microsoft.Maui.Controls"
+                       xmlns:t="clr-namespace:TimeTracker.App.Resources.Texts"
+                       xmlns:vm="clr-namespace:TimeTracker.App.ViewModels"
+                       xmlns:m="clr-namespace:TimeTracker.BL.Models;assembly=TimeTracker.BL">
+
+    <controls:ScrollView>
+        <StackLayout>
+            <VerticalStackLayout
+                MaximumWidthRequest="1200">
+                <Label 
+                    Text="{x:Static t:Activity.ListActivity_Title}"
+                    Style="{StaticResource HeaderH1}"/>
+                <Label Text="{Binding CurrentDateTime}" />
+
+                <Button Text="{x:Static t:Activity.FilterActivity_Filter}"
+                            Command="{Binding ShowFiltersCommand}"
+                            Margin="0,0,5,0"/>
+
+                <StackLayout IsVisible="{Binding IsFiltering}">
+                    <StackLayout Orientation="Horizontal" Margin="10,20,10,0">
+                        <Label Text="{x:Static t:Activity.FilterActivity_StartDate}" Margin="0,5,5,5" VerticalOptions="Center" />
+                        <DatePicker Date="{Binding StartDateFilter, Mode=TwoWay}" />
+                    </StackLayout>
+
+                    <StackLayout Orientation="Horizontal" Margin="10,0,10,20">
+                        <Label Text="{x:Static t:Activity.FilterActivity_EndDate}" Margin="0,5,5,5" VerticalOptions="Center" />
+                        <DatePicker Date="{Binding EndDateFilter, Mode=TwoWay}" />
+                    </StackLayout>
+
+                    <StackLayout Orientation="Horizontal" Margin="10,5">
+                        <Button Text="{x:Static t:Activity.FilterActivity_7Days}" Command="{Binding Last7DaysCommand}" Style="{StaticResource InfoButton}"/>
+                        <Button Text="{x:Static t:Activity.FilterActivity_30Days}" Command="{Binding Last30DaysCommand}" Style="{StaticResource InfoButton}"/>
+                        <Button Text="{x:Static t:Activity.FilterActivity_LastMonth}" Command="{Binding PreviousMonthCommand}" Style="{StaticResource InfoButton}"/>
+                        <Button Text="{x:Static t:Activity.FilterActivity_ThisMonth}" Command="{Binding ThisMonthCommand}" Style="{StaticResource InfoButton}"/>
+                        <Button Text="{x:Static t:Activity.FilterActivity_ThisDay}" Command="{Binding ThisDayCommand}" Style="{StaticResource InfoButton}"/>
+                        <Button Text="{x:Static t:Activity.FilterActivity_LastYear}" Command="{Binding LastYearCommand}" Style="{StaticResource InfoButton}"/>
+                        <Button Text="{x:Static t:Activity.FilterActivity_ThisYear}" Command="{Binding ThisYearCommand}" Style="{StaticResource InfoButton}"/>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Horizontal" Margin="10,0">
+                        <Button Text="{x:Static t:Activity.FilterActivity_ClearFilters}" Command="{Binding ClearFiltersCommand}" />
+                        <Button Text="{x:Static t:Activity.FilterActivity_ApplyFilters}" Command="{Binding ApplyFiltersCommand}" />
+                    </StackLayout>
+                </StackLayout>
+
+                <VerticalStackLayout Margin="10">
+                    <CollectionView ItemsSource="{Binding FilteredActivities}"
+                                    VerticalOptions="FillAndExpand">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout Orientation="Vertical"
+                                               SnapPointsAlignment="Start"
+                                               ItemSpacing="10"/>
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="m:ActivityListModel">
+                                <Frame Padding="4"
+                                       HasShadow="False">
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={x:Reference ActivityListViewRoot}, Path=BindingContext.GoToDetailCommand}"
+                                                              CommandParameter="{Binding ID}" />
+                                    </Frame.GestureRecognizers>
+                                    <VerticalStackLayout
+                                        Spacing="10">
+                                        <Label
+                                            HorizontalTextAlignment="Center"
+                                            Text="{Binding Type, Converter={StaticResource ActivityTypeToStringConverter}}"/>
+                                        <Label
+                                            HorizontalTextAlignment="Center"
+                                            >
+                                            <Label.Text>
+                                                <MultiBinding StringFormat="{}{0} - {1} ({2})">
+                                                    <Binding Path="Start"/>
+                                                    <Binding Path="End"/>
+                                                    <Binding Path="Duration"/>
+                                                </MultiBinding>
+                                            </Label.Text>
+                                        </Label>
+                                    </VerticalStackLayout>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </StackLayout>
+    </controls:ScrollView>
+</views:ContentPageBase>

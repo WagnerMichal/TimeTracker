@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:t="using:TimeTracker.App.Resources.Texts"
+    xmlns:u="clr-namespace:TimeTracker.App.Views.User"
+    xmlns:p="clr-namespace:TimeTracker.App.Views.Project"
+    xmlns:a="clr-namespace:TimeTracker.App.Views.Activity"
+    x:Class="TimeTracker.App.Shells.AppShell"
+    x:Name="AppShellRoot"
+    FlyoutBehavior="Disabled"
+    BackgroundColor="{StaticResource NavigationBarBackgroundColor}">
+
+    <Shell.MenuBarItems>
+        <MenuBarItem Text="{x:Static t:AppShellTexts.Navigation_MenuItem_Title}">
+            <MenuFlyoutItem Text="{x:Static t:AppShellTexts.Users_Tab_Title}"
+                            Command="{Binding Source={x:Reference AppShellRoot}, Path=GoToUsersCommand}" />
+
+            <MenuFlyoutItem Text="{x:Static t:AppShellTexts.Projects_Tab_Title}"
+                            Command="{Binding Source={x:Reference AppShellRoot}, Path=GoToProjectCommand}" />
+
+            <MenuFlyoutItem Text="{x:Static t:AppShellTexts.Activities_Tab_Title}"
+                            Command="{Binding Source={x:Reference AppShellRoot}, Path=GoToActivitiesCommand}" />
+        </MenuBarItem>
+    </Shell.MenuBarItems>
+
+    <ShellContent ContentTemplate="{DataTemplate u:UserListView}" Route="users" />
+
+    <ShellContent ContentTemplate="{DataTemplate p:ProjectListView}" Route="projects" />
+
+    <ShellContent ContentTemplate="{DataTemplate a:ActivityListView}" Route="activities" />
+</Shell>

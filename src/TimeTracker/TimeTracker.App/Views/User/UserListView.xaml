@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       Style="{StaticResource ContentPageStyle}"
+                       xmlns:views="using:TimeTracker.App.Views"
+                       x:DataType="vm:UserListViewModel"
+                       x:Class="TimeTracker.App.Views.User.UserListView"
+                       x:Name="UserListViewRoot"
+                       xmlns:controls="clr-namespace:Microsoft.Maui.Controls;assembly=Microsoft.Maui.Controls"
+                       xmlns:vm="clr-namespace:TimeTracker.App.ViewModels" 
+                       xmlns:m="clr-namespace:TimeTracker.BL.Models;assembly=TimeTracker.BL"
+                       xmlns:t="clr-namespace:TimeTracker.App.Resources.Texts">
+
+    <controls:ScrollView>
+        <StackLayout>
+            <VerticalStackLayout
+                    MaximumWidthRequest="1200">
+                <Label 
+                        Text="{x:Static t:User.ListUser_Title}"
+                        Style="{StaticResource HeaderH1}"/>
+                <Button 
+                        Text="{x:Static t:User.ListUser_AddUser}"
+                        Command="{Binding GoToCreateCommand}"
+                        HorizontalOptions="End"
+                        VerticalOptions="End"/>
+
+                <VerticalStackLayout Margin="10">
+                    <CollectionView ItemsSource="{Binding Users}"
+                                        VerticalOptions="FillAndExpand">
+                        <CollectionView.ItemsLayout>
+                            <GridItemsLayout Orientation="Vertical"
+                                                    SnapPointsAlignment="Start"
+                                                    HorizontalItemSpacing="10" 
+                                                    VerticalItemSpacing="20"
+                                                    Span="3"/>
+                        </CollectionView.ItemsLayout>
+
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="m:UserListModel">
+                                <Frame
+                                        MaximumHeightRequest="200"
+                                        MaximumWidthRequest="500"
+                                        WidthRequest="500"
+                                        >
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={x:Reference UserListViewRoot}, Path=BindingContext.GoToDetailCommand}"
+                                                                    CommandParameter="{Binding ID}" />
+                                    </Frame.GestureRecognizers>
+
+                                    <Label
+                                            HorizontalTextAlignment="Center"
+                                            VerticalTextAlignment="Center">
+                                        <Label.Text>
+                                            <MultiBinding StringFormat="{}{0} {1}">
+                                                <Binding Path="Name"/>
+                                                <Binding Path="LastName"/>
+                                            </MultiBinding>
+                                        </Label.Text>
+                                    </Label>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
+        </StackLayout>
+    </controls:ScrollView>
+</views:ContentPageBase>

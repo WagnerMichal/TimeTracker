@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       Style="{StaticResource ContentPageStyle}"
+                       x:Class="TimeTracker.App.Views.Project.ProjectDetailView"
+                       x:Name="ProjectDetailViewRoot"
+                       x:DataType="vm:ProjectDetailViewModel"
+                       xmlns:controls="clr-namespace:Microsoft.Maui.Controls;assembly=Microsoft.Maui.Controls"
+                       xmlns:views="using:TimeTracker.App.Views"
+                       xmlns:t="clr-namespace:TimeTracker.App.Resources.Texts"
+                       xmlns:vm="clr-namespace:TimeTracker.App.ViewModels"
+                       xmlns:m="clr-namespace:TimeTracker.BL.Models;assembly=TimeTracker.BL">
+
+    <controls:ScrollView>
+        <StackLayout>
+            <VerticalStackLayout
+                MaximumWidthRequest="1200">
+        
+                <Label
+                    Style="{StaticResource HeaderH1}"
+                    Text="{Binding Project.Name}" />
+
+                <HorizontalStackLayout
+                    Margin="10"
+                    Spacing="20"
+                    VerticalOptions="Center"
+                >
+                    <Button
+                        Text="{x:Static t:Project.DetailProject_Edit}"
+                        Command="{Binding GoToEditCommand}"/>
+            
+                    <Button
+                        Text="{x:Static t:Project.DetailProject_Delete}"
+                        Command="{Binding DeleteCommand}"
+                        Style="{StaticResource ErrorButton}"/>
+                    <Button 
+                        Text="{x:Static t:Project.DetailProject_AddUsers}"
+                        Command="{Binding GoToAddUsersCommand}"
+                        Style="{StaticResource InfoButton}"/>
+            
+                </HorizontalStackLayout>
+
+                <Grid
+                    Margin="10"
+                    ColumnDefinitions="170, auto"
+                    RowDefinitions="auto, auto"
+                >
+                    <Label 
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        FontAttributes="Italic"
+                        Text="{x:Static t:Project.DetailProject_Description}"
+                        />
+
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Text="{Binding Project.Description}"/>
+
+                    <Label 
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        FontAttributes="Italic"
+                        Text="{x:Static t:Project.DetailProject_Users}"
+                    />
+
+                    <CollectionView 
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        ItemsSource="{Binding Project.Users}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="m:UserInProjectListModel">
+                                <Label>
+                                    <Label.Text>
+                                        <MultiBinding StringFormat="{}{0} {1}">
+                                            <Binding Path="UserName"/>
+                                            <Binding Path="UserLastName"/>
+                                        </MultiBinding>
+                                    </Label.Text>
+                                </Label>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                </Grid>
+        
+            </VerticalStackLayout>
+        </StackLayout>
+    </controls:ScrollView>
+
+</views:ContentPageBase>

@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<?xaml-comp compile="true" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <Color x:Key="Primary">#0075FF</Color>
+    <Color x:Key="BackgroundColor">#ffffff</Color>
+    <Color x:Key="Black">#333333</Color>
+    <Color x:Key="White">#ffffff</Color>
+
+    <Color x:Key="Gray50">#FAFAFA</Color>
+    <Color x:Key="Gray100">#F4F4F5</Color>
+    <Color x:Key="Gray200">#E4E4E7</Color>
+    <Color x:Key="Gray300">#D4D4D8</Color>
+    <Color x:Key="Gray400">#D4D4D8</Color>
+    <Color x:Key="Gray500">#71717A</Color>
+    <Color x:Key="Gray600">#52525B</Color>
+    <Color x:Key="Gray700">#3F3F46</Color>
+    <Color x:Key="Gray800">#27272A</Color>
+    <Color x:Key="Gray900">#18181B</Color>
+    
+    <Color x:Key="NavigationBarBackgroundColor">#0075FF</Color>
+    <Color x:Key="NavigationBarTextColor">#FFFFFF</Color>
+
+    <Color x:Key="ErrorColor">#EB5757</Color>
+    <Color x:Key="SuccessColor">#27AE60</Color>
+    <Color x:Key="InfoColor">#BDBDBD</Color>
+    <Color x:Key="WarningColor">#F2994A</Color>
+</ResourceDictionary>
